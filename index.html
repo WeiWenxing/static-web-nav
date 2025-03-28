@@ -364,7 +364,7 @@
         }
 
         .sousuo {
-            padding: 35px 0;
+            padding: 60px 0;
         }
 
         .search {
@@ -424,23 +424,23 @@
         }
 
         .search-engine {
-            position: absolute;
-            top: 60px;
+            position: relative;
+            top: -100px;  /* 改为负值，显示在搜索栏上方 */
             left: 0;
             width: 100%;
-            background: #FFF;
-            padding: 15px 0 0 15px;
+            background: transparent;
+            padding: 0;
             border-radius: 5px;
-            box-shadow: 0px 5px 20px 0px #d8d7d7;
-            transition: all 0.3s;
-            display: none;
-            z-index: 999
+            box-shadow: none;  /* 移除阴影 */
+            display: block;  /* 始终显示 */
+            z-index: 999;
         }
 
         .search-engine-head {
             overflow: hidden;
             margin-bottom: 10px;
             padding-right: 15px;
+            display: none;
         }
 
         .search-engine-tit {
@@ -450,30 +450,16 @@
             color: #999;
         }
 
-        .search-engine ul::before {
-            content: '';
-            width: 0px;
-            height: 0px;
-            position: absolute;
-            top: -15px;
-            border-top: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 8px solid #fff;
-            border-left: 8px solid transparent;
-        }
-
-        .search-engine-list::after {
-            content: '';
-            width: 70px;
-            height: 18px;
-            position: absolute;
-            top: -17px;
-            left: 1px;
+        /* 添加选中状态样式 */
+        .search-engine-list li.active {
+            background: #16C0F8;  /* 浅蓝色背景 */
+            color: white;  /* 文字颜色保持不变 */
+            border-bottom: none;  /* 移除下划线 */
         }
 
         .search-engine-list li {
             float: left;
-            width: 30%;
+            width: auto;
             line-height: 30px;
             font-size: 14px;
             padding: 5px 10px 5px 10px;
@@ -684,7 +670,7 @@
             }
 
             .sousuo {
-                padding: 10px 0 50px 0;
+                padding: 60px 0 50px 0;
                 margin-top: 0;
             }
 
@@ -837,7 +823,7 @@
             }
 
             .search-engine-list li {
-                width: 112px;
+                width: auto;
                 margin: 0 15px 15px 0;
             }
 
@@ -1149,17 +1135,15 @@
                     var addList = '<li>' + search.data[i].name + '</li>'
                     $('.search-engine-list').append(addList);
                 }
-                $('.search-engine-name, .search-engine').hover(function () {
-                    $('.search-engine').css('display', 'block')
-                }, function () {
-                    $('.search-engine').css('display', 'none')
-                });
+                $('.search-engine-list li').eq(0).addClass('active');
                 $('.search-engine-list li').click(function () {
                     var _index = $(this).index();
                     var searchNameBtn = document.getElementById("search-engine-name");
                     searchNameBtn.innerHTML = search.data[_index].name;
                     thisSearch = search.data[_index].url;
-                    $('.search-engine').css('display', 'none')
+                    // 添加选中状态
+                    $('.search-engine-list li').removeClass('active');
+                    $(this).addClass('active');
                 })
             })
             $("#search-btn").click(function () {
